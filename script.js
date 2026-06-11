@@ -28,6 +28,24 @@ function formatPhone(value) {
   return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
 }
 
+function formatSelectedDate(value) {
+  if (!value) return "날짜를 선택해 주세요";
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return new Intl.DateTimeFormat("ko-KR", {
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  }).format(date);
+}
+
+function updateDateButton() {
+  const display = document.querySelector("#lead-date-display");
+  const button = dateInput.closest(".date-picker-button");
+  display.textContent = formatSelectedDate(dateInput.value);
+  button.classList.toggle("has-value", Boolean(dateInput.value));
+}
+
 function selectBranch(branch) {
   if (!allowedBranches.has(branch)) return;
   const option = form.querySelector(`input[name="branch"][value="${branch}"]`);
@@ -57,10 +75,13 @@ function closeLeadModal() {
 }
 
 dateInput.min = localDateString(new Date());
+updateDateButton();
 
 phoneInput.addEventListener("input", () => {
   phoneInput.value = formatPhone(phoneInput.value);
 });
+
+dateInput.addEventListener("change", updateDateButton);
 
 document.querySelectorAll("[data-lead-trigger]").forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
@@ -154,6 +175,7 @@ form.addEventListener("submit", async (event) => {
 submitAnother.addEventListener("click", () => {
   form.reset();
   dateInput.min = localDateString(new Date());
+  updateDateButton();
   timeInput.value = "";
   successPanel.hidden = true;
   form.hidden = false;

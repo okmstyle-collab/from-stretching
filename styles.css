@@ -1437,8 +1437,120 @@ section[id] {
 
 .date-time-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
-  gap: 8px;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.date-time-grid select {
+  min-height: 70px;
+  padding-inline: 16px 38px;
+  border-radius: 14px;
+  color: var(--color-deep);
+  background-color: var(--color-white);
+  font-weight: 800;
+}
+
+.date-picker-button {
+  position: relative;
+  display: grid;
+  min-height: 70px;
+  grid-template-columns: 44px minmax(0, 1fr) 20px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 14px;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  color: var(--color-deep);
+  background: linear-gradient(135deg, var(--color-primary-pale), var(--color-white));
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.date-picker-button:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.date-picker-button:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-shadow);
+}
+
+.date-picker-button input[type="date"] {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.date-picker-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--color-deep);
+  background: var(--color-primary-soft);
+}
+
+.date-picker-icon svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.date-picker-copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.date-picker-copy small {
+  color: var(--color-muted);
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+
+.date-picker-copy strong {
+  overflow: hidden;
+  color: var(--color-body);
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-picker-button.has-value {
+  border-color: var(--color-primary);
+  background: var(--color-primary-pale);
+}
+
+.date-picker-button.has-value .date-picker-icon {
+  color: var(--color-white);
+  background: var(--color-deep);
+}
+
+.date-picker-button.has-value .date-picker-copy strong {
+  color: var(--color-deep);
+}
+
+.date-picker-arrow {
+  color: var(--color-primary);
+  font-size: 1.65rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .honeypot {
@@ -1763,6 +1875,10 @@ section[id] {
 
   .lead-modal-content {
     padding: 32px 36px 0;
+  }
+
+  .date-time-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(150px, 0.65fr);
   }
 
   .choice-grid-six {

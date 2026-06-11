@@ -9,7 +9,7 @@
     />
     <title>프롬 스트레칭 | 1:1 맞춤 스트레칭</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js?v=3" defer></script>
+    <script src="script.js?v=4" defer></script>
   </head>
   <body>
     <!--
@@ -555,7 +555,19 @@
             <div class="form-field">
               <label for="lead-date">체험 희망시간 <em>*</em></label>
               <div class="date-time-grid">
-                <input id="lead-date" name="date" type="date" aria-label="체험 희망 날짜" required />
+                <label class="date-picker-button" for="lead-date">
+                  <input id="lead-date" name="date" type="date" aria-label="체험 희망 날짜" required />
+                  <span class="date-picker-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img">
+                      <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+                    </svg>
+                  </span>
+                  <span class="date-picker-copy">
+                    <small>체험 날짜</small>
+                    <strong id="lead-date-display">날짜를 선택해 주세요</strong>
+                  </span>
+                  <span class="date-picker-arrow" aria-hidden="true">›</span>
+                </label>
                 <select id="lead-time" name="time" aria-label="체험 희망 시간" required>
                   <option value="">시간 선택</option>
                   <option value="09:00">09시</option>

@@ -9,7 +9,12 @@ function send(response, status, payload) {
 function isValidPreferredAt(value) {
   if (typeof value !== "string") return false;
   const date = new Date(value);
-  return !Number.isNaN(date.getTime()) && date.getTime() > Date.now() - 60 * 60 * 1000;
+  return (
+    !Number.isNaN(date.getTime()) &&
+    date.getTime() > Date.now() &&
+    date.getUTCMinutes() === 0 &&
+    date.getUTCSeconds() === 0
+  );
 }
 
 module.exports = async function handler(request, response) {

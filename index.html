@@ -9,7 +9,7 @@
     />
     <title>프롬 스트레칭 | 1:1 맞춤 스트레칭</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js?v=2" defer></script>
+    <script src="script.js?v=3" defer></script>
   </head>
   <body>
     <!--
@@ -466,98 +466,14 @@
         </div>
       </section>
 
-      <section class="final-cta" id="lead-form">
+      <section class="final-cta" id="start">
         <div class="final-orb final-orb-one" aria-hidden="true"></div>
         <div class="final-orb final-orb-two" aria-hidden="true"></div>
-        <div class="container lead-layout">
-          <div class="lead-copy">
-            <p class="eyebrow eyebrow-light"><span></span> START TODAY</p>
-            <h2>오늘의 몸을 미루지 않는 것,<br />가벼운 변화의 시작입니다.</h2>
-            <p>신청 내용을 확인한 담당자가 희망 지점과 체험 일정을 안내해 드립니다.</p>
-            <ul class="lead-benefits">
-              <li>간편 신청</li>
-              <li>담당자 일정 안내</li>
-              <li>체험 후 결정</li>
-            </ul>
-          </div>
-
-          <div class="lead-form-card">
-            <div class="lead-form-heading">
-              <span>FREE TRIAL</span>
-              <h3>무료 체험 신청</h3>
-              <p>필수 정보만 남겨주세요. 확인 후 순서대로 연락드립니다.</p>
-            </div>
-
-            <form id="trial-form" class="lead-form" novalidate>
-              <div class="form-row form-row-two">
-                <div class="form-field">
-                  <label for="lead-name">이름 <em>필수</em></label>
-                  <input id="lead-name" name="name" type="text" autocomplete="name" maxlength="30" placeholder="이름을 입력해 주세요" required />
-                </div>
-                <div class="form-field">
-                  <label for="lead-phone">연락처 <em>필수</em></label>
-                  <input id="lead-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000" required />
-                </div>
-              </div>
-
-              <fieldset class="form-field choice-field">
-                <legend>희망지점 <em>필수</em></legend>
-                <div class="choice-grid choice-grid-three">
-                  <label class="choice-chip"><input type="radio" name="branch" value="송도점" required /><span>송도점</span></label>
-                  <label class="choice-chip"><input type="radio" name="branch" value="작전점" /><span>작전점</span></label>
-                  <label class="choice-chip"><input type="radio" name="branch" value="부평점" /><span>부평점</span></label>
-                </div>
-              </fieldset>
-
-              <fieldset class="form-field choice-field">
-                <legend>불편한 부위 <em>필수 · 복수 선택 가능</em></legend>
-                <div class="choice-grid choice-grid-six">
-                  <label class="choice-chip"><input type="checkbox" name="concerns" value="목" /><span>목</span></label>
-                  <label class="choice-chip"><input type="checkbox" name="concerns" value="어깨" /><span>어깨</span></label>
-                  <label class="choice-chip"><input type="checkbox" name="concerns" value="등" /><span>등</span></label>
-                  <label class="choice-chip"><input type="checkbox" name="concerns" value="허리" /><span>허리</span></label>
-                  <label class="choice-chip"><input type="checkbox" name="concerns" value="골반" /><span>골반</span></label>
-                  <label class="choice-chip"><input type="checkbox" name="concerns" value="기타" /><span>기타</span></label>
-                </div>
-              </fieldset>
-
-              <div class="form-field">
-                <label>체험 희망시간 <em>필수</em></label>
-                <div class="date-time-grid">
-                  <input id="lead-date" name="date" type="date" aria-label="체험 희망 날짜" required />
-                  <input id="lead-time" name="time" type="time" aria-label="체험 희망 시간" min="09:00" max="23:00" step="1800" required />
-                </div>
-                <small>실제 예약 가능 여부는 담당자 확인 후 확정됩니다.</small>
-              </div>
-
-              <div class="honeypot" aria-hidden="true">
-                <label for="lead-website">웹사이트</label>
-                <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off" />
-              </div>
-
-              <label class="consent-check">
-                <input name="consent" type="checkbox" required />
-                <span><strong>[필수]</strong> 개인정보 수집 및 이용에 동의합니다.</span>
-              </label>
-              <details class="privacy-details">
-                <summary>개인정보 수집 및 이용 안내 보기</summary>
-                <p>수집 목적: 무료 체험 상담 및 일정 안내<br />수집 항목: 이름, 연락처, 희망지점, 불편한 부위, 체험 희망시간<br />보유 기간: 상담 목적 달성 후 1년<br />동의를 거부할 수 있으나 상담 신청이 제한될 수 있습니다.</p>
-              </details>
-
-              <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
-              <button class="button lead-submit" type="submit">
-                <span class="submit-label">무료 체험 신청</span>
-                <span class="submit-loading" aria-hidden="true">신청 중...</span>
-              </button>
-            </form>
-
-            <div id="form-success" class="form-success" hidden>
-              <span aria-hidden="true">✓</span>
-              <h3>신청이 완료되었습니다.</h3>
-              <p>담당자가 신청 내용을 확인한 뒤 연락드리겠습니다.</p>
-              <button class="button button-secondary" type="button" id="submit-another">다른 신청 남기기</button>
-            </div>
-          </div>
+        <div class="container final-cta-inner">
+          <p class="eyebrow eyebrow-light"><span></span> START TODAY</p>
+          <h2>오늘의 몸을 미루지 않는 것,<br />가벼운 변화의 시작입니다.</h2>
+          <p>필수 정보만 남겨주세요. 담당자가 희망 지점과 체험 일정을 안내해 드립니다.</p>
+          <a class="button button-white" href="#lead-form" data-lead-trigger>무료 체험 신청</a>
         </div>
       </section>
     </main>
@@ -590,6 +506,105 @@
         <p>사업자 정보 · 개인정보처리방침</p>
       </div>
     </footer>
+
+    <dialog class="lead-modal" id="lead-form" aria-labelledby="lead-form-title">
+      <div class="lead-modal-shell">
+        <button class="modal-close" type="button" data-modal-close aria-label="신청 모달 닫기">×</button>
+
+        <div class="lead-form-heading">
+          <span>FREE TRIAL</span>
+          <h2 id="lead-form-title">무료 체험 신청</h2>
+          <p>필수 정보만 남겨주세요. 확인 후 순서대로 연락드립니다.</p>
+        </div>
+
+        <form id="trial-form" class="lead-form" novalidate>
+          <div class="form-row form-row-two">
+            <div class="form-field">
+              <label for="lead-name">이름 <em>필수</em></label>
+              <input id="lead-name" name="name" type="text" autocomplete="name" maxlength="30" placeholder="이름을 입력해 주세요" required />
+            </div>
+            <div class="form-field">
+              <label for="lead-phone">연락처 <em>필수</em></label>
+              <input id="lead-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000" required />
+            </div>
+          </div>
+
+          <fieldset class="form-field choice-field">
+            <legend>희망지점 <em>필수</em></legend>
+            <div class="choice-grid choice-grid-three">
+              <label class="choice-chip"><input type="radio" name="branch" value="송도점" required /><span>송도점</span></label>
+              <label class="choice-chip"><input type="radio" name="branch" value="작전점" /><span>작전점</span></label>
+              <label class="choice-chip"><input type="radio" name="branch" value="부평점" /><span>부평점</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-field choice-field">
+            <legend>불편한 부위 <em>필수 · 복수 선택 가능</em></legend>
+            <div class="choice-grid choice-grid-six">
+              <label class="choice-chip"><input type="checkbox" name="concerns" value="목" /><span>목</span></label>
+              <label class="choice-chip"><input type="checkbox" name="concerns" value="어깨" /><span>어깨</span></label>
+              <label class="choice-chip"><input type="checkbox" name="concerns" value="등" /><span>등</span></label>
+              <label class="choice-chip"><input type="checkbox" name="concerns" value="허리" /><span>허리</span></label>
+              <label class="choice-chip"><input type="checkbox" name="concerns" value="골반" /><span>골반</span></label>
+              <label class="choice-chip"><input type="checkbox" name="concerns" value="기타" /><span>기타</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label for="lead-date">체험 희망시간 <em>필수</em></label>
+            <div class="date-time-grid">
+              <input id="lead-date" name="date" type="date" aria-label="체험 희망 날짜" required />
+              <select id="lead-time" name="time" aria-label="체험 희망 시간" required>
+                <option value="">시간 선택</option>
+                <option value="09:00">09시</option>
+                <option value="10:00">10시</option>
+                <option value="11:00">11시</option>
+                <option value="12:00">12시</option>
+                <option value="13:00">13시</option>
+                <option value="14:00">14시</option>
+                <option value="15:00">15시</option>
+                <option value="16:00">16시</option>
+                <option value="17:00">17시</option>
+                <option value="18:00">18시</option>
+                <option value="19:00">19시</option>
+                <option value="20:00">20시</option>
+                <option value="21:00">21시</option>
+                <option value="22:00">22시</option>
+                <option value="23:00">23시</option>
+              </select>
+            </div>
+            <small>희망 시간은 정각 단위로 선택되며, 실제 예약은 담당자 확인 후 확정됩니다.</small>
+          </div>
+
+          <div class="honeypot" aria-hidden="true">
+            <label for="lead-website">웹사이트</label>
+            <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <label class="consent-check">
+            <input name="consent" type="checkbox" required />
+            <span><strong>[필수]</strong> 개인정보 수집 및 이용에 동의합니다.</span>
+          </label>
+          <details class="privacy-details">
+            <summary>개인정보 수집 및 이용 안내 보기</summary>
+            <p>수집 목적: 무료 체험 상담 및 일정 안내<br />수집 항목: 이름, 연락처, 희망지점, 불편한 부위, 체험 희망시간<br />보유 기간: 상담 목적 달성 후 1년<br />동의를 거부할 수 있으나 상담 신청이 제한될 수 있습니다.</p>
+          </details>
+
+          <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+          <button class="button lead-submit" type="submit">
+            <span class="submit-label">무료 체험 신청</span>
+            <span class="submit-loading" aria-hidden="true">신청 중...</span>
+          </button>
+        </form>
+
+        <div id="form-success" class="form-success" tabindex="-1" hidden>
+          <span aria-hidden="true">✓</span>
+          <h3>신청이 완료되었습니다.</h3>
+          <p>담당자가 신청 내용을 확인한 뒤 연락드리겠습니다.</p>
+          <button class="button button-secondary" type="button" id="submit-another">다른 신청 남기기</button>
+        </div>
+      </div>
+    </dialog>
 
     <div class="mobile-sticky-cta">
       <a href="#lead-form" data-lead-trigger>무료 체험 신청 <span>→</span></a>

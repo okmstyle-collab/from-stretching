@@ -1,11 +1,13 @@
 const form = document.querySelector("#trial-form");
-const formCard = document.querySelector(".lead-form-card");
+const formCard = document.querySelector(".lead-modal-shell");
 const formMessage = document.querySelector("#form-message");
 const successPanel = document.querySelector("#form-success");
 const submitAnother = document.querySelector("#submit-another");
 const phoneInput = document.querySelector("#lead-phone");
 const dateInput = document.querySelector("#lead-date");
-const leadSection = document.querySelector("#lead-form");
+const timeInput = document.querySelector("#lead-time");
+const leadModal = document.querySelector("#lead-form");
+const modalClose = document.querySelector("[data-modal-close]");
 
 const allowedBranches = new Set(["송도점", "작전점", "부평점"]);
 const allowedConcerns = new Set(["목", "어깨", "등", "허리", "골반", "기타"]);
@@ -42,15 +44,19 @@ function clearMessage() {
   delete formMessage.dataset.type;
 }
 
-dateInput.min = localDateString(new Date());
-
-if ("IntersectionObserver" in window) {
-  const leadObserver = new IntersectionObserver(
-    ([entry]) => document.body.classList.toggle("lead-form-visible", entry.isIntersecting),
-    { threshold: 0.08 },
-  );
-  leadObserver.observe(leadSection);
+function openLeadModal(branch) {
+  selectBranch(branch);
+  if (!leadModal.open) leadModal.showModal();
+  document.body.classList.add("modal-open");
+  window.history.replaceState(null, "", "#lead-form");
+  window.setTimeout(() => document.querySelector("#lead-name")?.focus(), 80);
 }
+
+function closeLeadModal() {
+  if (leadModal.open) leadModal.close();
+}
+
+dateInput.min = localDateString(new Date());
 
 phoneInput.addEventListener("input", () => {
   phoneInput.value = formatPhone(phoneInput.value);
@@ -59,12 +65,24 @@ phoneInput.addEventListener("input", () => {
 document.querySelectorAll("[data-lead-trigger]").forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
-    selectBranch(trigger.dataset.branch);
-    leadSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", "#lead-form");
-    window.setTimeout(() => document.querySelector("#lead-name")?.focus({ preventScroll: true }), 700);
+    openLeadModal(trigger.dataset.branch);
   });
 });
+
+modalClose.addEventListener("click", closeLeadModal);
+
+leadModal.addEventListener("click", (event) => {
+  if (event.target === leadModal) closeLeadModal();
+});
+
+leadModal.addEventListener("close", () => {
+  document.body.classList.remove("modal-open");
+  if (window.location.hash === "#lead-form") {
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  }
+});
+
+if (window.location.hash === "#lead-form") openLeadModal();
 
 form.addEventListener("input", clearMessage);
 form.addEventListener("change", clearMessage);
@@ -82,6 +100,7 @@ form.addEventListener("submit", async (event) => {
   const time = String(data.get("time") || "");
   const consent = data.get("consent") === "on";
   const preferredAt = new Date(`${date}T${time}:00+09:00`);
+  const isWholeHour = /^(09|1[0-9]|2[0-3]):00$/.test(time);
 
   if (
     !name ||
@@ -89,9 +108,9 @@ form.addEventListener("submit", async (event) => {
     !allowedBranches.has(branch) ||
     concerns.length === 0 ||
     !date ||
-    !time ||
+    !isWholeHour ||
     Number.isNaN(preferredAt.getTime()) ||
-    preferredAt.getTime() < Date.now() - 60 * 60 * 1000 ||
+    preferredAt.getTime() <= Date.now() ||
     !consent
   ) {
     setMessage("필수 항목을 모두 확인해 주세요.");
@@ -123,7 +142,7 @@ form.addEventListener("submit", async (event) => {
 
     form.hidden = true;
     successPanel.hidden = false;
-    successPanel.focus?.();
+    successPanel.focus();
   } catch (error) {
     setMessage(error.message || "잠시 후 다시 시도해 주세요.");
   } finally {
@@ -135,9 +154,10 @@ form.addEventListener("submit", async (event) => {
 submitAnother.addEventListener("click", () => {
   form.reset();
   dateInput.min = localDateString(new Date());
+  timeInput.value = "";
   successPanel.hidden = true;
   form.hidden = false;
   clearMessage();
   document.querySelector("#lead-name")?.focus();
-  formCard.scrollIntoView({ behavior: "smooth", block: "center" });
+  formCard.scrollTo({ top: 0, behavior: "smooth" });
 });

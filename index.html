@@ -9,6 +9,7 @@
     />
     <title>프롬 스트레칭 | 1:1 맞춤 스트레칭</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="script.js?v=2" defer></script>
   </head>
   <body>
     <!--
@@ -45,8 +46,7 @@
           <a href="#locations">지점 안내</a>
         </nav>
 
-        <a class="button button-small" href="#">무료 체험 신청</a>
-        <!-- 나중에 상담신청 링크로 교체 예정 -->
+        <a class="button button-small" href="#lead-form" data-lead-trigger>무료 체험 신청</a>
       </div>
     </header>
 
@@ -74,10 +74,8 @@
             </p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#">무료 체험 신청</a>
-              <!-- 나중에 상담신청 링크로 교체 예정 -->
-              <a class="button button-secondary" href="#">가까운 지점 찾기</a>
-              <!-- 나중에 상담신청 링크로 교체 예정 -->
+              <a class="button button-primary" href="#lead-form" data-lead-trigger>무료 체험 신청</a>
+              <a class="button button-secondary" href="#locations">가까운 지점 찾기</a>
             </div>
 
             <ul class="hero-points" aria-label="서비스 핵심 특징">
@@ -144,8 +142,7 @@
               프롬 스트레칭은 정해진 루틴을 반복하지 않습니다. 그날의 움직임과 불편을 먼저
               확인하고 필요한 부위에 집중합니다.
             </p>
-            <a class="text-link" href="#">내 몸에 맞는 케어 상담하기 <span>→</span></a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="text-link" href="#lead-form" data-lead-trigger>내 몸에 맞는 케어 상담하기 <span>→</span></a>
           </div>
 
           <ol class="solution-steps">
@@ -244,8 +241,7 @@
               <li>움직임 범위 간단 확인</li>
               <li>1:1 맞춤 스트레칭</li>
             </ul>
-            <a class="button button-outline" href="#">무료 체험 신청</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-outline" href="#lead-form" data-lead-trigger>무료 체험 신청</a>
           </article>
 
           <article class="program-card program-card-recommended">
@@ -263,8 +259,7 @@
               <li>전후 움직임 확인</li>
               <li>일상 홈 케어 안내</li>
             </ul>
-            <a class="button button-white" href="#">추천 플랜 상담</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-white" href="#lead-form" data-lead-trigger>추천 플랜 상담</a>
           </article>
 
           <article class="program-card">
@@ -280,8 +275,7 @@
               <li>집중 부위 우선 관리</li>
               <li>단계별 컨디션 체크</li>
             </ul>
-            <a class="button button-outline" href="#">무료 체험 신청</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-outline" href="#lead-form" data-lead-trigger>무료 체험 신청</a>
           </article>
         </div>
         <p class="program-notice">프로그램과 비용은 몸 상태 및 상담 결과에 따라 안내됩니다.</p>
@@ -325,8 +319,7 @@
 
         <div class="container process-action">
           <p><strong>준비물은 편한 옷과 50분의 여유.</strong> 나머지는 프롬 스트레칭이 안내합니다.</p>
-          <a class="button button-primary" href="#">무료 체험 신청</a>
-          <!-- 나중에 상담신청 링크로 교체 예정 -->
+          <a class="button button-primary" href="#lead-form" data-lead-trigger>무료 체험 신청</a>
         </div>
       </section>
 
@@ -395,8 +388,7 @@
             <p class="eyebrow"><span></span> FAQ</p>
             <h2>처음이라면,<br />이런 점이 궁금하실 거예요.</h2>
             <p>결정하기 전에 충분히 묻고 확인하세요. 상담만 받아도 괜찮습니다.</p>
-            <a class="button button-secondary" href="#">다른 질문 상담하기</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-secondary" href="#lead-form" data-lead-trigger>다른 질문 상담하기</a>
           </div>
 
           <div class="faq-list">
@@ -440,8 +432,7 @@
             <!-- [보완 필요] 송도점 상세 주소와 지도 링크 -->
             <p class="location-address">상세 주소 추후 입력</p>
             <p class="location-phone">032-834-0401</p>
-            <a class="button button-outline" href="#">송도점 상담 신청</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-outline" href="#lead-form" data-lead-trigger data-branch="송도점">송도점 상담 신청</a>
           </article>
           <article class="location-card">
             <div class="location-head"><span>02</span><p>JAKJEON</p></div>
@@ -449,8 +440,7 @@
             <!-- [보완 필요] 작전점 상세 주소와 지도 링크 -->
             <p class="location-address">상세 주소 추후 입력</p>
             <p class="location-phone">032-553-0401</p>
-            <a class="button button-outline" href="#">작전점 상담 신청</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-outline" href="#lead-form" data-lead-trigger data-branch="작전점">작전점 상담 신청</a>
           </article>
           <article class="location-card">
             <div class="location-head"><span>03</span><p>BUPYEONG</p></div>
@@ -458,8 +448,7 @@
             <!-- [보완 필요] 부평점 상세 주소와 지도 링크 -->
             <p class="location-address">상세 주소 추후 입력</p>
             <p class="location-phone">032-719-3336</p>
-            <a class="button button-outline" href="#">부평점 상담 신청</a>
-            <!-- 나중에 상담신청 링크로 교체 예정 -->
+            <a class="button button-outline" href="#lead-form" data-lead-trigger data-branch="부평점">부평점 상담 신청</a>
           </article>
         </div>
 
@@ -477,20 +466,98 @@
         </div>
       </section>
 
-      <section class="final-cta">
+      <section class="final-cta" id="lead-form">
         <div class="final-orb final-orb-one" aria-hidden="true"></div>
         <div class="final-orb final-orb-two" aria-hidden="true"></div>
-        <div class="container final-cta-inner">
-          <p class="eyebrow eyebrow-light"><span></span> START TODAY</p>
-          <h2>오늘의 몸을 미루지 않는 것,<br />가벼운 변화의 시작입니다.</h2>
-          <p>1분 신청으로 가까운 지점과 가능한 일정을 먼저 확인해 보세요.</p>
-          <a class="button button-white button-large" href="#">무료 체험 신청</a>
-          <!-- 나중에 상담신청 링크로 교체 예정 -->
-          <ul>
-            <li>간편 신청</li>
-            <li>담당자 일정 안내</li>
-            <li>체험 후 결정</li>
-          </ul>
+        <div class="container lead-layout">
+          <div class="lead-copy">
+            <p class="eyebrow eyebrow-light"><span></span> START TODAY</p>
+            <h2>오늘의 몸을 미루지 않는 것,<br />가벼운 변화의 시작입니다.</h2>
+            <p>신청 내용을 확인한 담당자가 희망 지점과 체험 일정을 안내해 드립니다.</p>
+            <ul class="lead-benefits">
+              <li>간편 신청</li>
+              <li>담당자 일정 안내</li>
+              <li>체험 후 결정</li>
+            </ul>
+          </div>
+
+          <div class="lead-form-card">
+            <div class="lead-form-heading">
+              <span>FREE TRIAL</span>
+              <h3>무료 체험 신청</h3>
+              <p>필수 정보만 남겨주세요. 확인 후 순서대로 연락드립니다.</p>
+            </div>
+
+            <form id="trial-form" class="lead-form" novalidate>
+              <div class="form-row form-row-two">
+                <div class="form-field">
+                  <label for="lead-name">이름 <em>필수</em></label>
+                  <input id="lead-name" name="name" type="text" autocomplete="name" maxlength="30" placeholder="이름을 입력해 주세요" required />
+                </div>
+                <div class="form-field">
+                  <label for="lead-phone">연락처 <em>필수</em></label>
+                  <input id="lead-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000" required />
+                </div>
+              </div>
+
+              <fieldset class="form-field choice-field">
+                <legend>희망지점 <em>필수</em></legend>
+                <div class="choice-grid choice-grid-three">
+                  <label class="choice-chip"><input type="radio" name="branch" value="송도점" required /><span>송도점</span></label>
+                  <label class="choice-chip"><input type="radio" name="branch" value="작전점" /><span>작전점</span></label>
+                  <label class="choice-chip"><input type="radio" name="branch" value="부평점" /><span>부평점</span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-field choice-field">
+                <legend>불편한 부위 <em>필수 · 복수 선택 가능</em></legend>
+                <div class="choice-grid choice-grid-six">
+                  <label class="choice-chip"><input type="checkbox" name="concerns" value="목" /><span>목</span></label>
+                  <label class="choice-chip"><input type="checkbox" name="concerns" value="어깨" /><span>어깨</span></label>
+                  <label class="choice-chip"><input type="checkbox" name="concerns" value="등" /><span>등</span></label>
+                  <label class="choice-chip"><input type="checkbox" name="concerns" value="허리" /><span>허리</span></label>
+                  <label class="choice-chip"><input type="checkbox" name="concerns" value="골반" /><span>골반</span></label>
+                  <label class="choice-chip"><input type="checkbox" name="concerns" value="기타" /><span>기타</span></label>
+                </div>
+              </fieldset>
+
+              <div class="form-field">
+                <label>체험 희망시간 <em>필수</em></label>
+                <div class="date-time-grid">
+                  <input id="lead-date" name="date" type="date" aria-label="체험 희망 날짜" required />
+                  <input id="lead-time" name="time" type="time" aria-label="체험 희망 시간" min="09:00" max="23:00" step="1800" required />
+                </div>
+                <small>실제 예약 가능 여부는 담당자 확인 후 확정됩니다.</small>
+              </div>
+
+              <div class="honeypot" aria-hidden="true">
+                <label for="lead-website">웹사이트</label>
+                <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <label class="consent-check">
+                <input name="consent" type="checkbox" required />
+                <span><strong>[필수]</strong> 개인정보 수집 및 이용에 동의합니다.</span>
+              </label>
+              <details class="privacy-details">
+                <summary>개인정보 수집 및 이용 안내 보기</summary>
+                <p>수집 목적: 무료 체험 상담 및 일정 안내<br />수집 항목: 이름, 연락처, 희망지점, 불편한 부위, 체험 희망시간<br />보유 기간: 상담 목적 달성 후 1년<br />동의를 거부할 수 있으나 상담 신청이 제한될 수 있습니다.</p>
+              </details>
+
+              <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+              <button class="button lead-submit" type="submit">
+                <span class="submit-label">무료 체험 신청</span>
+                <span class="submit-loading" aria-hidden="true">신청 중...</span>
+              </button>
+            </form>
+
+            <div id="form-success" class="form-success" hidden>
+              <span aria-hidden="true">✓</span>
+              <h3>신청이 완료되었습니다.</h3>
+              <p>담당자가 신청 내용을 확인한 뒤 연락드리겠습니다.</p>
+              <button class="button button-secondary" type="button" id="submit-another">다른 신청 남기기</button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -525,8 +592,7 @@
     </footer>
 
     <div class="mobile-sticky-cta">
-      <a href="#">무료 체험 신청 <span>→</span></a>
-      <!-- 나중에 상담신청 링크로 교체 예정 -->
+      <a href="#lead-form" data-lead-trigger>무료 체험 신청 <span>→</span></a>
     </div>
   </body>
 </html>

@@ -72,7 +72,7 @@ module.exports = async function handler(request, response) {
           "불편한 부위": { multi_select: concerns.map((concern) => ({ name: concern })) },
           "체험 희망시간": { date: { start: body.preferredAt } },
           "비고": { rich_text: [] },
-          "등록여부": { checkbox: false },
+          "등록여부": { select: { name: "미등록" } },
         },
       }),
     });

@@ -438,11 +438,21 @@ section[id] {
   letter-spacing: 0.14em;
 }
 
-.hero-placeholder {
-  min-height: 460px;
+.hero-video-frame {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
   border: 10px solid var(--color-white);
-  border-radius: 180px 180px 34px 34px;
+  border-radius: 34px;
+  background: var(--color-deep);
   box-shadow: var(--shadow-card);
+}
+
+.hero-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .floating-note {
@@ -1949,10 +1959,6 @@ section[id] {
     grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.78fr);
     align-items: center;
     gap: 64px;
-  }
-
-  .hero-placeholder {
-    min-height: 570px;
   }
 
   .hero-bottom-line {

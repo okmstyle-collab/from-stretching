@@ -83,10 +83,19 @@
           </div>
 
           <div class="hero-visual">
-            <div class="placeholder hero-placeholder" data-role="hero-video">
-              <span class="placeholder-label">HERO VIDEO</span>
-              <strong>1:1 스트레칭 영상 자리</strong>
-              <small>이후 실제 매장·세션 영상으로 교체</small>
+            <div class="hero-video-frame" data-role="hero-video">
+              <video
+                class="hero-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="프롬 스트레칭 회복운동 움직임 영상"
+              >
+                <source src="assets/from-stretching-hero.mp4" type="video/mp4" />
+                브라우저에서 영상을 재생할 수 없습니다.
+              </video>
             </div>
             <div class="floating-note">
               <span class="floating-icon" aria-hidden="true">01</span>

@@ -1478,6 +1478,12 @@ section[id] {
   box-shadow: 0 0 0 4px var(--color-primary-shadow);
 }
 
+.date-picker-button:focus-visible {
+  outline: 0;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-shadow);
+}
+
 .date-picker-button input[type="date"] {
   position: absolute;
   inset: 0;
@@ -1488,7 +1494,7 @@ section[id] {
   padding: 0;
   border: 0;
   opacity: 0;
-  cursor: pointer;
+  pointer-events: none;
 }
 
 .date-picker-icon {

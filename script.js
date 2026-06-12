@@ -5,6 +5,7 @@ const successPanel = document.querySelector("#form-success");
 const submitAnother = document.querySelector("#submit-another");
 const phoneInput = document.querySelector("#lead-phone");
 const dateInput = document.querySelector("#lead-date");
+const datePickerButton = document.querySelector(".date-picker-button");
 const timeInput = document.querySelector("#lead-time");
 const leadModal = document.querySelector("#lead-form");
 const modalClose = document.querySelector("[data-modal-close]");
@@ -41,9 +42,23 @@ function formatSelectedDate(value) {
 
 function updateDateButton() {
   const display = document.querySelector("#lead-date-display");
-  const button = dateInput.closest(".date-picker-button");
   display.textContent = formatSelectedDate(dateInput.value);
-  button.classList.toggle("has-value", Boolean(dateInput.value));
+  datePickerButton.classList.toggle("has-value", Boolean(dateInput.value));
+}
+
+function openDatePicker() {
+  dateInput.focus({ preventScroll: true });
+
+  if (typeof dateInput.showPicker === "function") {
+    try {
+      dateInput.showPicker();
+      return;
+    } catch (error) {
+      // Older mobile browsers may expose showPicker without allowing it.
+    }
+  }
+
+  dateInput.click();
 }
 
 function selectBranch(branch) {
@@ -82,6 +97,18 @@ phoneInput.addEventListener("input", () => {
 });
 
 dateInput.addEventListener("change", updateDateButton);
+
+datePickerButton.addEventListener("click", (event) => {
+  if (event.target === dateInput) return;
+  event.preventDefault();
+  openDatePicker();
+});
+
+datePickerButton.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  openDatePicker();
+});
 
 document.querySelectorAll("[data-lead-trigger]").forEach((trigger) => {
   trigger.addEventListener("click", (event) => {

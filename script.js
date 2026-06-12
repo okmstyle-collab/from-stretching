@@ -210,3 +210,14 @@ submitAnother.addEventListener("click", () => {
   document.querySelector("#lead-name")?.focus();
   formCard.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+const heroVideo = document.querySelector(".hero-video");
+let heroReplayTimer;
+
+heroVideo?.addEventListener("ended", () => {
+  window.clearTimeout(heroReplayTimer);
+  heroReplayTimer = window.setTimeout(() => {
+    heroVideo.currentTime = 0;
+    heroVideo.play().catch(() => {});
+  }, 2000);
+});

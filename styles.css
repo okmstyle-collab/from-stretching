@@ -335,6 +335,15 @@ section[id] {
   align-self: center;
 }
 
+.hero h1 {
+  font-size: clamp(1.6rem, 7vw, 3.3rem);
+}
+
+.hero-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
 .hero h1 em {
   display: inline-block;
   position: relative;

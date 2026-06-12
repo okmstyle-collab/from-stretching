@@ -357,8 +357,11 @@ section[id] {
 
 .hero-description {
   margin-bottom: 28px;
-  color: var(--color-body);
-  font-size: 1.05rem;
+  color: var(--color-deep);
+  font-size: clamp(1.3rem, 5.8vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
 }
 
 .hero-actions {

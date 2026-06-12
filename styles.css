@@ -1184,21 +1184,44 @@ section[id] {
 }
 
 .review-top span:last-child {
-  color: var(--color-rating);
-  letter-spacing: 0;
+  color: var(--color-deep-soft);
+  letter-spacing: 0.04em;
 }
 
-.review-placeholder {
-  min-height: 120px;
+.review-point {
+  display: flex;
+  min-height: 148px;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px;
+  overflow: hidden;
   border-radius: var(--radius-small);
-  font-size: 0.78rem;
-  font-weight: 800;
+  background:
+    radial-gradient(circle at 92% 14%, var(--color-white) 0 7%, var(--color-transparent) 7.5%),
+    linear-gradient(135deg, var(--color-primary-bright), var(--color-primary-soft));
+}
+
+.review-point span {
+  margin-bottom: 7px;
+  color: var(--color-deep-soft);
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.review-point strong {
+  color: var(--color-deep);
+  font-size: 1.05rem;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
 }
 
 .review-card blockquote {
   margin: 18px 0 8px;
-  font-size: 1rem;
-  font-weight: 800;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.7;
 }
 
 .review-card > p {

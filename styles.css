@@ -1017,8 +1017,8 @@ section[id] {
 
 .proof-gallery {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr);
   gap: 8px;
   height: min(146vw, 540px);
   min-height: 470px;
@@ -1038,15 +1038,15 @@ section[id] {
 }
 
 .proof-photo:nth-child(1) {
-  border-radius: calc(var(--radius-medium) - 8px) 6px 6px 6px;
+  border-radius: calc(var(--radius-medium) - 8px) calc(var(--radius-medium) - 8px) 6px 6px;
 }
 
 .proof-photo:nth-child(2) {
-  border-radius: 6px calc(var(--radius-medium) - 8px) 6px 6px;
+  border-radius: 6px 6px 6px calc(var(--radius-medium) - 8px);
 }
 
 .proof-photo:nth-child(3) {
-  border-radius: 6px 6px 6px calc(var(--radius-medium) - 8px);
+  border-radius: 6px;
 }
 
 .proof-photo:nth-child(4) {
@@ -1063,6 +1063,14 @@ section[id] {
 .proof-photo-neck img,
 .proof-photo-shoulder img {
   object-position: center;
+}
+
+.proof-photo-neck {
+  grid-column: 1 / -1;
+}
+
+.proof-photo-neck img {
+  object-fit: contain;
 }
 
 .proof-photo-upper img {
@@ -1105,7 +1113,7 @@ section[id] {
   letter-spacing: 0.12em;
 }
 
-.proof-gallery:hover .proof-photo img {
+.proof-gallery:hover .proof-photo:not(.proof-photo-neck) img {
   transform: scale(1.025);
 }
 
@@ -2311,8 +2319,9 @@ section[id] {
   }
 
   .proof-gallery {
-    height: 540px;
-    min-height: 540px;
+    grid-template-rows: minmax(0, 3.4fr) minmax(0, 1fr);
+    height: 720px;
+    min-height: 720px;
   }
 
   .review-grid {

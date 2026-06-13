@@ -20,6 +20,13 @@ function localDateString(date) {
   return `${year}-${month}-${day}`;
 }
 
+function isWeekendDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  const weekday = new Date(year, month - 1, day).getDay();
+  return weekday === 0 || weekday === 6;
+}
+
 function formatPhone(value) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
 
@@ -96,7 +103,20 @@ phoneInput.addEventListener("input", () => {
   phoneInput.value = formatPhone(phoneInput.value);
 });
 
-dateInput.addEventListener("change", updateDateButton);
+dateInput.addEventListener("change", () => {
+  if (isWeekendDate(dateInput.value)) {
+    dateInput.value = "";
+    dateInput.setAttribute("aria-invalid", "true");
+    datePickerButton.classList.add("is-invalid");
+    updateDateButton();
+    window.setTimeout(() => setMessage("토요일과 일요일은 예약할 수 없습니다. 평일을 선택해 주세요."), 0);
+    return;
+  }
+
+  dateInput.removeAttribute("aria-invalid");
+  datePickerButton.classList.remove("is-invalid");
+  updateDateButton();
+});
 
 datePickerButton.addEventListener("click", (event) => {
   if (event.target === dateInput) return;
@@ -150,6 +170,14 @@ form.addEventListener("submit", async (event) => {
   const preferredAt = new Date(`${date}T${time}:00+09:00`);
   const isWholeHour = /^(09|1[0-9]|2[0-3]):00$/.test(time);
 
+  if (isWeekendDate(date)) {
+    dateInput.setAttribute("aria-invalid", "true");
+    datePickerButton.classList.add("is-invalid");
+    setMessage("토요일과 일요일은 예약할 수 없습니다. 평일을 선택해 주세요.");
+    datePickerButton.focus();
+    return;
+  }
+
   if (
     !name ||
     phone.length < 10 ||
@@ -202,6 +230,8 @@ form.addEventListener("submit", async (event) => {
 submitAnother.addEventListener("click", () => {
   form.reset();
   dateInput.min = localDateString(new Date());
+  dateInput.removeAttribute("aria-invalid");
+  datePickerButton.classList.remove("is-invalid");
   updateDateButton();
   timeInput.value = "";
   successPanel.hidden = true;

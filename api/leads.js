@@ -9,11 +9,15 @@ function send(response, status, payload) {
 function isValidPreferredAt(value) {
   if (typeof value !== "string") return false;
   const date = new Date(value);
+  const koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+  const koreaWeekday = koreaDate.getUTCDay();
   return (
     !Number.isNaN(date.getTime()) &&
     date.getTime() > Date.now() &&
     date.getUTCMinutes() === 0 &&
-    date.getUTCSeconds() === 0
+    date.getUTCSeconds() === 0 &&
+    koreaWeekday !== 0 &&
+    koreaWeekday !== 6
   );
 }
 

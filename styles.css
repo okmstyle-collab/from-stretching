@@ -21,6 +21,7 @@
   --color-primary-shadow: #67c8f452;
   --color-error: #9c2f2f;
   --color-error-soft: #fff0f0;
+  --color-error-shadow: #9c2f2f24;
   --color-success-soft: #eaf9f5;
   --color-modal-backdrop: #071d3dcc;
   --shadow-card: 0 22px 60px var(--color-deep-shadow);
@@ -1801,6 +1802,17 @@ section[id] {
 
 .date-picker-button.has-value .date-picker-copy strong {
   color: var(--color-deep);
+}
+
+.date-picker-button.is-invalid {
+  border-color: var(--color-error);
+  background: var(--color-error-soft);
+  box-shadow: 0 0 0 4px var(--color-error-shadow);
+}
+
+.date-picker-button.is-invalid .date-picker-icon {
+  color: var(--color-error);
+  background: var(--color-white);
 }
 
 .date-picker-arrow {

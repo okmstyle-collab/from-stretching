@@ -11,7 +11,7 @@ const leadModal = document.querySelector("#lead-form");
 const modalClose = document.querySelector("[data-modal-close]");
 
 const allowedBranches = new Set(["송도점", "작전점", "부평점"]);
-const allowedConcerns = new Set(["목", "어깨", "등", "허리", "골반", "기타"]);
+const allowedConcerns = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
 
 function localDateString(date) {
   const year = date.getFullYear();

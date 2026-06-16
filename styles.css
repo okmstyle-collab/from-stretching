@@ -1636,7 +1636,7 @@ section[id] {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.choice-grid-six {
+.choice-grid-concerns {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -2155,8 +2155,8 @@ section[id] {
     grid-template-columns: minmax(0, 1.35fr) minmax(150px, 0.65fr);
   }
 
-  .choice-grid-six {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  .choice-grid-concerns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

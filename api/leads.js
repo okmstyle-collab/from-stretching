@@ -1,5 +1,5 @@
 const ALLOWED_BRANCHES = new Set(["송도점", "작전점", "부평점"]);
-const ALLOWED_CONCERNS = new Set(["목", "어깨", "등", "허리", "골반", "기타"]);
+const ALLOWED_CONCERNS = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
 const DATA_SOURCE_ID = "37c383a5-097c-8069-8945-000bdf19ad94";
 
 function send(response, status, payload) {

@@ -21,8 +21,8 @@
       content="프롬 스트레칭의 1:1 패시브 스트레칭을 송도점, 작전점, 부평점에서 경험해 보세요."
     />
     <title>프롬 스트레칭 | 누워서 받는 맞춤 스트레칭</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js?v=7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=8" />
+    <script src="script.js?v=8" defer></script>
   </head>
   <body>
     <!--
@@ -360,7 +360,7 @@
             <div class="process-dot">01</div>
             <p class="step-label">APPLY</p>
             <h3>간편 신청</h3>
-            <p>이름, 연락처, 원하는 지점을 남겨주세요.</p>
+            <p>이름, 연락처, 성별과 원하는 지점을 남겨주세요.</p>
           </article>
           <article class="process-step">
             <div class="process-dot">02</div>
@@ -692,6 +692,14 @@
             </div>
 
             <fieldset class="form-field choice-field">
+              <legend>성별 <em>*</em></legend>
+              <div class="choice-grid choice-grid-two">
+                <label class="choice-chip"><input type="radio" name="gender" value="남성" required /><span>남성</span></label>
+                <label class="choice-chip"><input type="radio" name="gender" value="여성" /><span>여성</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-field choice-field">
               <legend>희망지점 <em>*</em></legend>
               <div class="choice-grid choice-grid-three">
                 <label class="choice-chip"><input type="radio" name="branch" value="송도점" required /><span>송도점</span></label>
@@ -763,7 +771,7 @@
             </label>
             <details class="privacy-details">
               <summary>개인정보 수집 및 이용 안내 보기</summary>
-              <p>수집 목적: 무료 체험 상담 및 일정 안내<br />수집 항목: 이름, 연락처, 희망지점, 불편한 부위, 체험 희망시간<br />보유 기간: 상담 목적 달성 후 1년<br />동의를 거부할 수 있으나 상담 신청이 제한될 수 있습니다.</p>
+              <p>수집 목적: 무료 체험 상담 및 일정 안내<br />수집 항목: 이름, 연락처, 성별, 희망지점, 불편한 부위, 체험 희망시간<br />보유 기간: 상담 목적 달성 후 1년<br />동의를 거부할 수 있으나 상담 신청이 제한될 수 있습니다.</p>
             </details>
 
             <p id="form-message" class="form-message" role="status" aria-live="polite"></p>

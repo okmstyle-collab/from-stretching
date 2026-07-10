@@ -1,4 +1,5 @@
 const ALLOWED_BRANCHES = new Set(["송도점", "작전점", "부평점"]);
+const ALLOWED_GENDERS = new Set(["남성", "여성"]);
 const ALLOWED_CONCERNS = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
 const DATA_SOURCE_ID = "37c383a5-097c-8069-8945-000bdf19ad94";
 
@@ -31,6 +32,7 @@ module.exports = async function handler(request, response) {
   const name = typeof body.name === "string" ? body.name.trim().slice(0, 30) : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const phoneDigits = phone.replace(/\D/g, "");
+  const gender = body.gender;
   const branch = body.branch;
   const concerns = Array.isArray(body.concerns)
     ? [...new Set(body.concerns.filter((value) => ALLOWED_CONCERNS.has(value)))]
@@ -43,6 +45,7 @@ module.exports = async function handler(request, response) {
     name.length > 30 ||
     phoneDigits.length < 10 ||
     phoneDigits.length > 11 ||
+    !ALLOWED_GENDERS.has(gender) ||
     !ALLOWED_BRANCHES.has(branch) ||
     concerns.length === 0 ||
     !isValidPreferredAt(body.preferredAt) ||
@@ -72,6 +75,7 @@ module.exports = async function handler(request, response) {
         properties: {
           "이름": { title: [{ text: { content: name } }] },
           "연락처": { phone_number: phone },
+          "성별": { select: { name: gender } },
           "희망지점": { select: { name: branch } },
           "불편한 부위": { multi_select: concerns.map((concern) => ({ name: concern })) },
           "체험 희망시간": { date: { start: body.preferredAt } },

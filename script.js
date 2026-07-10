@@ -11,6 +11,7 @@ const leadModal = document.querySelector("#lead-form");
 const modalClose = document.querySelector("[data-modal-close]");
 
 const allowedBranches = new Set(["송도점", "작전점", "부평점"]);
+const allowedGenders = new Set(["남성", "여성"]);
 const allowedConcerns = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
 
 function localDateString(date) {
@@ -162,6 +163,7 @@ form.addEventListener("submit", async (event) => {
   const data = new FormData(form);
   const concerns = data.getAll("concerns").filter((value) => allowedConcerns.has(value));
   const branch = data.get("branch");
+  const gender = data.get("gender");
   const phone = String(data.get("phone") || "").replace(/\D/g, "");
   const name = String(data.get("name") || "").trim();
   const date = String(data.get("date") || "");
@@ -181,6 +183,7 @@ form.addEventListener("submit", async (event) => {
   if (
     !name ||
     phone.length < 10 ||
+    !allowedGenders.has(gender) ||
     !allowedBranches.has(branch) ||
     concerns.length === 0 ||
     !date ||
@@ -205,6 +208,7 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify({
         name,
         phone: formatPhone(phone),
+        gender,
         branch,
         concerns,
         preferredAt: preferredAt.toISOString(),

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://from-stretching.vercel.app/sitemap.xml

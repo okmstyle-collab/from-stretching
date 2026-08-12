@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>예약금 결제 확인 | 프롬 스트레칭</title>
+    <link rel="stylesheet" href="styles.css?v=9" />
+    <script src="payment-result.js?v=1" defer></script>
+  </head>
+  <body class="payment-result-page" data-payment-result="success">
+    <main class="payment-result-wrap">
+      <section class="payment-result-card" aria-live="polite">
+        <a class="payment-result-logo" href="/" aria-label="프롬 스트레칭 홈">
+          <img src="assets/from-stretching-logo.png" alt="FROM STRETCHING 1:1 PREMIUM RECOVERY" />
+        </a>
+        <span class="payment-result-icon is-pending" id="payment-result-icon" aria-hidden="true">...</span>
+        <p class="eyebrow eyebrow-centered"><span></span> RESERVATION PAYMENT</p>
+        <h1 id="payment-result-title">예약금 결제를 확인하고 있습니다.</h1>
+        <p id="payment-result-copy">잠시만 기다려 주세요. 결제 승인 후 신청 정보에 자동으로 기록됩니다.</p>
+        <div class="payment-result-detail" id="payment-result-detail">결제 승인 요청 중...</div>
+        <div class="payment-result-actions">
+          <a class="button button-primary" id="payment-result-action" href="/">홈으로 돌아가기</a>
+          <a class="button button-secondary" href="/#lead-form">다시 신청하기</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

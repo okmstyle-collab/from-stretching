@@ -2,6 +2,7 @@ const ALLOWED_BRANCHES = new Set(["송도점", "작전점", "부평점"]);
 const ALLOWED_GENDERS = new Set(["남성", "여성"]);
 const ALLOWED_CONCERNS = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
 const DATA_SOURCE_ID = "37c383a5-097c-8069-8945-000bdf19ad94";
+const RESERVATION_AMOUNT = 10000;
 
 function send(response, status, payload) {
   response.status(status).json(payload);
@@ -81,6 +82,10 @@ module.exports = async function handler(request, response) {
           "체험 희망시간": { date: { start: body.preferredAt } },
           "비고": { rich_text: [] },
           "등록여부": { multi_select: [{ name: "미등록" }] },
+          "결제상태": { select: { name: "미결제" } },
+          "결제금액": { number: RESERVATION_AMOUNT },
+          "주문번호": { rich_text: [] },
+          "결제키": { rich_text: [] },
         },
       }),
     });
@@ -91,7 +96,8 @@ module.exports = async function handler(request, response) {
       return send(response, 502, { ok: false, message: "신청 저장이 지연되고 있습니다. 잠시 후 다시 시도해 주세요." });
     }
 
-    return send(response, 201, { ok: true });
+    const createdLead = await notionResponse.json();
+    return send(response, 201, { ok: true, leadId: createdLead.id });
   } catch (error) {
     console.error("Lead API request failed", error);
     return send(response, 500, { ok: false, message: "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해 주세요." });

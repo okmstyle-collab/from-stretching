@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>예약금 결제 미완료 | 프롬 스트레칭</title>
+    <link rel="stylesheet" href="styles.css?v=9" />
+    <script src="payment-result.js?v=1" defer></script>
+  </head>
+  <body class="payment-result-page" data-payment-result="fail">
+    <main class="payment-result-wrap">
+      <section class="payment-result-card" aria-live="polite">
+        <a class="payment-result-logo" href="/" aria-label="프롬 스트레칭 홈">
+          <img src="assets/from-stretching-logo.png" alt="FROM STRETCHING 1:1 PREMIUM RECOVERY" />
+        </a>
+        <span class="payment-result-icon is-fail" id="payment-result-icon" aria-hidden="true">!</span>
+        <p class="eyebrow eyebrow-centered"><span></span> RESERVATION PAYMENT</p>
+        <h1 id="payment-result-title">예약금 결제가 완료되지 않았습니다.</h1>
+        <p id="payment-result-copy">카드 정보나 결제 취소 여부를 확인한 뒤 다시 진행해 주세요.</p>
+        <div class="payment-result-detail" id="payment-result-detail">결제 결과를 확인 중입니다.</div>
+        <div class="payment-result-actions">
+          <a class="button button-primary" id="payment-result-action" href="/#lead-form">다시 신청하기</a>
+          <a class="button button-secondary" href="/">홈으로 돌아가기</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

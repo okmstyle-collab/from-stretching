@@ -3,6 +3,11 @@ const formCard = document.querySelector(".lead-modal-shell");
 const formMessage = document.querySelector("#form-message");
 const successPanel = document.querySelector("#form-success");
 const submitAnother = document.querySelector("#submit-another");
+const payReservation = document.querySelector("#pay-reservation");
+const paymentMessage = document.querySelector("#payment-message");
+const paymentWidgetArea = document.querySelector("#payment-widget-area");
+const paymentMethods = document.querySelector("#payment-methods");
+const paymentAgreement = document.querySelector("#payment-agreement");
 const phoneInput = document.querySelector("#lead-phone");
 const dateInput = document.querySelector("#lead-date");
 const datePickerButton = document.querySelector(".date-picker-button");
@@ -13,6 +18,10 @@ const modalClose = document.querySelector("[data-modal-close]");
 const allowedBranches = new Set(["송도점", "작전점", "부평점"]);
 const allowedGenders = new Set(["남성", "여성"]);
 const allowedConcerns = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
+let currentLeadId = "";
+let reservationWidgets = null;
+let reservationPayment = null;
+let reservationWidgetReady = false;
 
 function localDateString(date) {
   const year = date.getFullYear();
@@ -83,6 +92,16 @@ function setMessage(message, type = "error") {
 function clearMessage() {
   formMessage.textContent = "";
   delete formMessage.dataset.type;
+}
+
+function setPaymentMessage(message, type = "error") {
+  paymentMessage.textContent = message;
+  paymentMessage.dataset.type = type;
+}
+
+function clearPaymentMessage() {
+  paymentMessage.textContent = "";
+  delete paymentMessage.dataset.type;
 }
 
 function openLeadModal(branch) {
@@ -220,6 +239,13 @@ form.addEventListener("submit", async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.message || "신청을 저장하지 못했습니다.");
 
+    currentLeadId = result.leadId || "";
+    payReservation.disabled = !currentLeadId;
+    clearPaymentMessage();
+    if (!currentLeadId) {
+      setPaymentMessage("신청은 저장되었지만 결제 연결 정보가 없습니다. 담당자 연락을 기다려 주세요.");
+    }
+
     form.hidden = true;
     successPanel.hidden = false;
     successPanel.focus();
@@ -231,8 +257,77 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
+payReservation.addEventListener("click", async () => {
+  if (!currentLeadId) {
+    setPaymentMessage("신청 정보를 찾지 못했습니다. 다시 신청해 주세요.");
+    return;
+  }
+
+  payReservation.disabled = true;
+  payReservation.classList.add("is-loading");
+  clearPaymentMessage();
+
+  try {
+    if (!reservationWidgetReady) {
+      const response = await fetch("/api/payments/prepare", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: currentLeadId }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || "결제를 준비하지 못했습니다.");
+
+      if (typeof TossPayments !== "function") {
+        throw new Error("결제창을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.");
+      }
+
+      const tossPayments = TossPayments(result.clientKey);
+      reservationWidgets = tossPayments.widgets({ customerKey: result.customerKey });
+      reservationPayment = result.payment;
+      await reservationWidgets.setAmount(result.amount);
+
+      paymentWidgetArea.hidden = false;
+      await reservationWidgets.renderPaymentMethods({ selector: "#payment-methods", amount: result.amount });
+      await reservationWidgets.renderAgreement({ selector: "#payment-agreement" });
+
+      reservationWidgetReady = true;
+      payReservation.classList.remove("is-loading");
+      payReservation.querySelector(".payment-button-label").textContent = "선택한 결제수단으로 10,000원 결제하기";
+      setPaymentMessage("결제수단을 선택한 뒤 아래 버튼을 한 번 더 눌러 주세요.", "success");
+      paymentWidgetArea.scrollIntoView({ behavior: "smooth", block: "center" });
+      payReservation.disabled = false;
+      return;
+    }
+
+    await reservationWidgets.requestPayment(reservationPayment);
+  } catch (error) {
+    if (!reservationWidgetReady) {
+      reservationWidgets = null;
+      reservationPayment = null;
+      paymentWidgetArea.hidden = true;
+      paymentMethods.innerHTML = "";
+      paymentAgreement.innerHTML = "";
+    }
+
+    payReservation.disabled = false;
+    payReservation.classList.remove("is-loading");
+    setPaymentMessage(error.message || "결제 준비 중 오류가 발생했습니다.");
+  }
+});
+
 submitAnother.addEventListener("click", () => {
   form.reset();
+  currentLeadId = "";
+  reservationWidgets = null;
+  reservationPayment = null;
+  reservationWidgetReady = false;
+  payReservation.disabled = true;
+  payReservation.classList.remove("is-loading");
+  payReservation.querySelector(".payment-button-label").textContent = "체험 예약금 10,000원 결제하기";
+  paymentWidgetArea.hidden = true;
+  paymentMethods.innerHTML = "";
+  paymentAgreement.innerHTML = "";
   dateInput.min = localDateString(new Date());
   dateInput.removeAttribute("aria-invalid");
   datePickerButton.classList.remove("is-invalid");
@@ -241,6 +336,7 @@ submitAnother.addEventListener("click", () => {
   successPanel.hidden = true;
   form.hidden = false;
   clearMessage();
+  clearPaymentMessage();
   document.querySelector("#lead-name")?.focus();
   formCard.scrollTo({ top: 0, behavior: "smooth" });
 });

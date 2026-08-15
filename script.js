@@ -22,6 +22,9 @@ let currentLeadId = "";
 let reservationWidgets = null;
 let reservationPayment = null;
 let reservationWidgetReady = false;
+const defaultModalTitle = document.querySelector("#lead-form-title")?.textContent || "무료 체험 신청";
+const defaultModalDescription =
+  document.querySelector(".lead-form-heading p")?.textContent || "남겨주신 정보를 바탕으로 편안한 첫 체험을 안내해 드립니다.";
 
 function localDateString(date) {
   const year = date.getFullYear();
@@ -104,12 +107,110 @@ function clearPaymentMessage() {
   delete paymentMessage.dataset.type;
 }
 
+function updateModalHeading(title, description) {
+  const titleElement = document.querySelector("#lead-form-title");
+  const descriptionElement = document.querySelector(".lead-form-heading p");
+
+  if (titleElement) titleElement.textContent = title;
+  if (descriptionElement) descriptionElement.textContent = description;
+}
+
+function showFormStep() {
+  successPanel.hidden = true;
+  form.hidden = false;
+  updateModalHeading(defaultModalTitle, defaultModalDescription);
+}
+
+function showSuccessStep() {
+  form.hidden = true;
+  successPanel.hidden = false;
+  updateModalHeading("신청 완료", "이제 예약금 결제를 진행하면 체험 예약 확인이 더 빨라집니다.");
+  formCard.scrollTo({ top: 0, behavior: "smooth" });
+  successPanel.focus();
+}
+
+function resetPaymentState() {
+  reservationWidgets = null;
+  reservationPayment = null;
+  reservationWidgetReady = false;
+  payReservation.disabled = !currentLeadId;
+  payReservation.classList.remove("is-loading");
+  payReservation.querySelector(".payment-button-label").textContent = "체험 예약금 결제수단 준비하기";
+  paymentWidgetArea.hidden = true;
+  paymentMethods.innerHTML = "";
+  paymentAgreement.innerHTML = "";
+}
+
+async function prepareReservationPayment({ shouldScroll = false } = {}) {
+  if (!currentLeadId) {
+    setPaymentMessage("신청 정보를 찾지 못했습니다. 다시 신청해 주세요.");
+    return false;
+  }
+
+  if (reservationWidgetReady) return true;
+
+  payReservation.disabled = true;
+  payReservation.classList.add("is-loading");
+  clearPaymentMessage();
+  setPaymentMessage("결제수단을 불러오고 있습니다. 잠시만 기다려 주세요.", "success");
+
+  try {
+    const response = await fetch("/api/payments/prepare", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ leadId: currentLeadId }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.message || "결제를 준비하지 못했습니다.");
+
+    if (typeof TossPayments !== "function") {
+      throw new Error("결제창을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.");
+    }
+
+    const tossPayments = TossPayments(result.clientKey);
+    reservationWidgets = tossPayments.widgets({ customerKey: result.customerKey });
+    reservationPayment = result.payment;
+    await reservationWidgets.setAmount(result.amount);
+
+    paymentWidgetArea.hidden = false;
+    await reservationWidgets.renderPaymentMethods({ selector: "#payment-methods", variantKey: "DEFAULT" });
+    await reservationWidgets.renderAgreement({ selector: "#payment-agreement" });
+
+    reservationWidgetReady = true;
+    payReservation.querySelector(".payment-button-label").textContent = "선택한 결제수단으로 10,000원 결제하기";
+    setPaymentMessage("결제수단을 선택한 뒤 아래 버튼을 눌러 예약금을 결제해 주세요.", "success");
+    if (shouldScroll) paymentWidgetArea.scrollIntoView({ behavior: "smooth", block: "center" });
+    return true;
+  } catch (error) {
+    reservationWidgets = null;
+    reservationPayment = null;
+    reservationWidgetReady = false;
+    paymentWidgetArea.hidden = true;
+    paymentMethods.innerHTML = "";
+    paymentAgreement.innerHTML = "";
+    payReservation.querySelector(".payment-button-label").textContent = "결제수단 다시 불러오기";
+    setPaymentMessage(error.message || "결제 준비 중 오류가 발생했습니다.");
+    return false;
+  } finally {
+    payReservation.disabled = false;
+    payReservation.classList.remove("is-loading");
+  }
+}
+
 function openLeadModal(branch) {
   selectBranch(branch);
   if (!leadModal.open) leadModal.showModal();
   document.body.classList.add("modal-open");
   window.history.replaceState(null, "", "#lead-form");
-  window.setTimeout(() => document.querySelector("#lead-name")?.focus(), 80);
+  window.setTimeout(() => {
+    if (form.hidden) {
+      successPanel.focus();
+      return;
+    }
+
+    document.querySelector("#lead-name")?.focus();
+  }, 80);
 }
 
 function closeLeadModal() {
@@ -240,15 +341,14 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(result.message || "신청을 저장하지 못했습니다.");
 
     currentLeadId = result.leadId || "";
-    payReservation.disabled = !currentLeadId;
+    resetPaymentState();
     clearPaymentMessage();
     if (!currentLeadId) {
       setPaymentMessage("신청은 저장되었지만 결제 연결 정보가 없습니다. 담당자 연락을 기다려 주세요.");
     }
 
-    form.hidden = true;
-    successPanel.hidden = false;
-    successPanel.focus();
+    showSuccessStep();
+    if (currentLeadId) prepareReservationPayment();
   } catch (error) {
     setMessage(error.message || "잠시 후 다시 시도해 주세요.");
   } finally {
@@ -263,78 +363,33 @@ payReservation.addEventListener("click", async () => {
     return;
   }
 
+  if (!reservationWidgetReady) {
+    await prepareReservationPayment({ shouldScroll: true });
+    return;
+  }
+
   payReservation.disabled = true;
   payReservation.classList.add("is-loading");
   clearPaymentMessage();
-
   try {
-    if (!reservationWidgetReady) {
-      const response = await fetch("/api/payments/prepare", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: currentLeadId }),
-      });
-
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.message || "결제를 준비하지 못했습니다.");
-
-      if (typeof TossPayments !== "function") {
-        throw new Error("결제창을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.");
-      }
-
-      const tossPayments = TossPayments(result.clientKey);
-      reservationWidgets = tossPayments.widgets({ customerKey: result.customerKey });
-      reservationPayment = result.payment;
-      await reservationWidgets.setAmount(result.amount);
-
-      paymentWidgetArea.hidden = false;
-      await reservationWidgets.renderPaymentMethods({ selector: "#payment-methods", amount: result.amount });
-      await reservationWidgets.renderAgreement({ selector: "#payment-agreement" });
-
-      reservationWidgetReady = true;
-      payReservation.classList.remove("is-loading");
-      payReservation.querySelector(".payment-button-label").textContent = "선택한 결제수단으로 10,000원 결제하기";
-      setPaymentMessage("결제수단을 선택한 뒤 아래 버튼을 한 번 더 눌러 주세요.", "success");
-      paymentWidgetArea.scrollIntoView({ behavior: "smooth", block: "center" });
-      payReservation.disabled = false;
-      return;
-    }
-
     await reservationWidgets.requestPayment(reservationPayment);
   } catch (error) {
-    if (!reservationWidgetReady) {
-      reservationWidgets = null;
-      reservationPayment = null;
-      paymentWidgetArea.hidden = true;
-      paymentMethods.innerHTML = "";
-      paymentAgreement.innerHTML = "";
-    }
-
     payReservation.disabled = false;
     payReservation.classList.remove("is-loading");
-    setPaymentMessage(error.message || "결제 준비 중 오류가 발생했습니다.");
+    setPaymentMessage(error.message || "결제창을 여는 중 오류가 발생했습니다.");
   }
 });
 
 submitAnother.addEventListener("click", () => {
   form.reset();
   currentLeadId = "";
-  reservationWidgets = null;
-  reservationPayment = null;
-  reservationWidgetReady = false;
-  payReservation.disabled = true;
-  payReservation.classList.remove("is-loading");
-  payReservation.querySelector(".payment-button-label").textContent = "체험 예약금 10,000원 결제하기";
-  paymentWidgetArea.hidden = true;
-  paymentMethods.innerHTML = "";
-  paymentAgreement.innerHTML = "";
+  resetPaymentState();
   dateInput.min = localDateString(new Date());
   dateInput.removeAttribute("aria-invalid");
   datePickerButton.classList.remove("is-invalid");
   updateDateButton();
   timeInput.value = "";
-  successPanel.hidden = true;
-  form.hidden = false;
+  showFormStep();
   clearMessage();
   clearPaymentMessage();
   document.querySelector("#lead-name")?.focus();

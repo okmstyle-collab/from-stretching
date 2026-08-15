@@ -2,7 +2,6 @@ const ALLOWED_BRANCHES = new Set(["송도점", "작전점", "부평점"]);
 const ALLOWED_GENDERS = new Set(["남성", "여성"]);
 const ALLOWED_CONCERNS = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
 const DATA_SOURCE_ID = "37c383a5-097c-8069-8945-000bdf19ad94";
-const RESERVATION_AMOUNT = 10000;
 
 function send(response, status, payload) {
   response.status(status).json(payload);
@@ -82,10 +81,6 @@ module.exports = async function handler(request, response) {
           "체험 희망시간": { date: { start: body.preferredAt } },
           "비고": { rich_text: [] },
           "등록여부": { multi_select: [{ name: "미등록" }] },
-          "결제상태": { select: { name: "미결제" } },
-          "결제금액": { number: RESERVATION_AMOUNT },
-          "주문번호": { rich_text: [] },
-          "결제키": { rich_text: [] },
         },
       }),
     });

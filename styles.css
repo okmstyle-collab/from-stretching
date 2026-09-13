@@ -358,6 +358,18 @@ section[id] {
   gap: 10px;
 }
 
+.hero-brand-summary {
+  max-width: 38rem;
+  margin-bottom: 28px;
+  color: var(--color-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.location-card[id] {
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
 .hero-points {
   display: flex;
   flex-wrap: wrap;

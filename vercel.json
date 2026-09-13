@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -8,6 +11,14 @@
           "value": "same-origin-allow-popups"
         }
       ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/payment-:result.html",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     }
   ]
 }

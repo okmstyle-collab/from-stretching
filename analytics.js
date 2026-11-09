@@ -100,8 +100,9 @@
     if (element.matches('[data-lead-trigger]') || href === '#apply') {
       track('cta_click', {placement, action: 'consultation'});
       if (site === 'stretching') track('form_open', {placement});
-    } else if (href.startsWith('tel:')) track('contact_click', {placement, action:'phone'});
-    else if (/^https:\/\/(m\.place|map)\.naver\.com\//.test(href)) track('contact_click', {placement, action:href.includes('/ticket') ? 'naver_booking' : 'naver_map'});
+    } else if (href === '#pt') track('cta_click', {placement, action:'pt_details'});
+    else if (href.startsWith('tel:')) track('contact_click', {placement, action:'phone'});
+    else if (/^https:\/\/(?:(?:m\.place|map)\.naver\.com|naver\.me)\//.test(href)) track('contact_click', {placement, action:href.includes('/ticket') ? 'naver_booking' : 'naver_map'});
     else if (element.matches('.carousel-arrow,[data-slide]') || /^(program|tour)-(prev|next)$/.test(element.id)) track('carousel_click', {placement, action:'navigate'});
   });
   document.querySelectorAll('details').forEach((el, index) => el.addEventListener('toggle', () => {

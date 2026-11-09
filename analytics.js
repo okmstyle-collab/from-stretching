@@ -17,6 +17,14 @@
     }
     return url.href;
   }
+  // Remember only campaign labels for this tab; never store form content.
+  const campaign = Object.fromEntries(new URL(cleanLocation()).searchParams);
+  let attribution = campaign;
+  try {
+    if (Object.keys(campaign).length) sessionStorage.setItem('frombody_campaign', JSON.stringify(campaign));
+    else attribution = JSON.parse(sessionStorage.getItem('frombody_campaign') || '{}');
+  } catch {}
+  window.frombodyAttribution = () => ({...attribution});
   let referrer = '';
   try { referrer = new URL(document.referrer).origin; } catch {}
   window['ga-disable-' + id] = disabled();

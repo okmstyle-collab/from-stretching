@@ -238,6 +238,7 @@ form.addEventListener("submit", async (event) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        attribution: window.frombodyAttribution?.(),
         name,
         phone: formatPhone(phone),
         gender,

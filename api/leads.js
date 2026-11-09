@@ -1,3 +1,11 @@
+
+// Only short campaign labels are accepted, never personal/contact identifiers.
+function campaignNote(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return '';
+  return ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+    .filter(key => typeof value[key] === 'string' && /^[a-zA-Z][a-zA-Z0-9_-]{0,79}$/.test(value[key]) && !/\d{9}/.test(value[key]))
+    .map(key => `${key}: ${value[key]}`).join(' | ');
+}
 const ALLOWED_BRANCHES = new Set(["송도점", "작전점", "부평점"]);
 const ALLOWED_GENDERS = new Set(["남성", "여성"]);
 const ALLOWED_CONCERNS = new Set(["목", "어깨", "등", "허리", "골반", "무릎", "발(발목)", "기타"]);
@@ -29,6 +37,7 @@ module.exports = async function handler(request, response) {
   }
 
   const body = request.body || {};
+  const attributionNote = campaignNote(body.attribution);
   const name = typeof body.name === "string" ? body.name.trim().slice(0, 30) : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const phoneDigits = phone.replace(/\D/g, "");
@@ -79,7 +88,7 @@ module.exports = async function handler(request, response) {
           "희망지점": { select: { name: branch } },
           "불편한 부위": { multi_select: concerns.map((concern) => ({ name: concern })) },
           "체험 희망시간": { date: { start: body.preferredAt } },
-          "비고": { rich_text: [] },
+          "비고": { rich_text: attributionNote ? [{ text: { content: "광고 유입 | " + attributionNote } }] : [] },
           "등록여부": { multi_select: [{ name: "미등록" }] },
         },
       }),

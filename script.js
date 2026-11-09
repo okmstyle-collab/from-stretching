@@ -252,8 +252,10 @@ form.addEventListener("submit", async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.message || "신청을 저장하지 못했습니다.");
 
+    if (result.ok === true && !data.get("website")) window.frombodyTrack?.("generate_lead", {branch});
     showSuccessStep();
   } catch (error) {
+    window.frombodyTrack?.("lead_form_error", {error_type: "submission_failed"});
     setMessage(error.message || "잠시 후 다시 시도해 주세요.");
   } finally {
     submitButton.disabled = false;
